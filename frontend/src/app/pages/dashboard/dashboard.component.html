@@ -1,0 +1,67 @@
+<div style="padding: 20px;">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Administrador de Productos</h2>
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#productModal">+ Agregar
+            producto</button>
+    </div>
+    <table class="table table-bordered">
+        <thead class="table-success">
+            <tr>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of products">
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+                <td>${{ product.price | number:'1.0-0' }}</td>
+                <td>{{ product.stock }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form [formGroup]="form" (ngSubmit)="createProduct()">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Agregar producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Nombre</label>
+                        <input class="form-control" formControlName="name">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Categoría</label>
+                        <input class="form-control" formControlName="category">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Precio</label>
+                        <input type="number" class="form-control" formControlName="price">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Stock</label>
+                        <input type="number" class="form-control" formControlName="stock">
+                    </div>
+
+                    <div *ngIf="errorMessage" class="text-danger mt-2">
+                        {{ errorMessage }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button #closeModal type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
